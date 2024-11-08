@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
+
 }
 
 android {
@@ -40,4 +42,23 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.github.Brain"
+                artifactId = "SquareImageView"
+                version = "1.0.1"
+            }
+            create<MavenPublication>("debug") {
+                from(components["debug"])
+                groupId = "com.github.Brain"
+                artifactId = "SquareImageView"
+                version = "1.0.1"
+            }
+        }
+    }
 }
